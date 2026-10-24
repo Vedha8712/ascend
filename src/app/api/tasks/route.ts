@@ -1,49 +1,43 @@
 import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 
 export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.email) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const formData = await request.formData();
-  const name = String(formData.get('name') || '').trim();
-  const username = String(formData.get('username') || '').trim();
-  const email = String(formData.get('email') || '').trim();
-  const password = String(formData.get('password') || '');
-  const academicLevel = String(formData.get('academicLevel') || 'Other');
+  const title = String(formData.get('title') || '').trim();
+  const description = String(formData.get('description') || '').trim();
+  const subject = String(formData.get('subject') || '').trim();
+  const priority = String(formData.get('priority') || 'MEDIUM');
+  const dueDateValue = formData.get('dueDate');
 
-  if (!name || !username || !email || password.length < 8) {
-    return NextResponse.json({ error: 'Please provide valid registration details.' }, { status: 400 });
+  if (!title) {
+    return NextResponse.json({ error: 'Task title is required.' }, { status: 400 });
   }
 
-  const existingUser = await prisma.user.findFirst({
-    where: { OR: [{ email }, { username }] },
-  });
+  const user = await prisma.user.findUnique({ where: { email: session.user.email } });
 
-  if (existingUser) {
-    return NextResponse.json({ error: 'An account with that email or username already exists.' }, { status: 409 });
+  if (!user) {
+    return NextResponse.json({ error: 'User not found.' }, { status: 404 });
   }
 
-  const passwordHash = await bcrypt.hash(password, 10);
-
-  const user = await prisma.user.create({
-    data: {
-      name,
-      username,
-      email,
-      passwordHash,
-      academicLevel,
-    },
-  });
-
-  await prisma.pet.create({
+  await prisma.task.create({
     data: {
       userId: user.id,
-      name: 'Ember',
-      stage: 'Cub',
-      mood: 'Happy',
-      xp: 0,
-      level: 1,
+      title,
+      description: description || null,
+      subject: subject || null,
+      priority: priority as any,
+      dueDate: dueDateValue ? new Date(String(dueDateValue)) : null,
+      status: 'TODO',
     },
   });
 
-  return NextResponse.redirect(new URL('/login', process.env.NEXTAUTH_URL || 'http://localhost:3000'));
+  return NextResponse.redirect(new URL('/tasks', process.env.NEXTAUTH_URL || 'http://localhost:3000'));
 }

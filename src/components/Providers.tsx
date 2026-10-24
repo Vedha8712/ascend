@@ -1,6 +1,8 @@
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+'use client';
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+import { SessionProvider } from 'next-auth/react';
+import type { ReactNode } from 'react';
+
+export function Providers({ children }: { children: ReactNode }) {
+  return <SessionProvider>{children}</SessionProvider>;
 }

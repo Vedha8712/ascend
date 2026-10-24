@@ -1,30 +1,31 @@
-export default function FeedbackPage() {
+export default function VolunteerPage() {
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="mx-auto max-w-3xl space-y-6">
       <div>
-        <p className="text-sm uppercase tracking-[0.2em] text-orange-500">Feedback</p>
-        <h1 className="text-3xl font-black text-slate-900">Share ideas and report issues</h1>
+        <p className="text-sm uppercase tracking-[0.2em] text-orange-500">Volunteer portal</p>
+        <h1 className="text-3xl font-black text-slate-900">Collaborate with the Ascend community</h1>
       </div>
 
-      <form className="card p-6 space-y-4">
-        <div>
-          <label className="mb-2 block text-sm font-semibold text-slate-700">Type</label>
-          <select className="input" name="type">
-            <option value="suggestion">Suggestion</option>
-            <option value="bug">Bug report</option>
-            <option value="feature">Feature request</option>
-          </select>
+      <div className="card p-6 space-y-4">
+        <p className="text-slate-600">
+          We welcome students and volunteers who want to help with research, community support, accessibility, and product feedback.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-2xl bg-orange-50 p-4">
+            <p className="text-sm uppercase tracking-[0.15em] text-orange-500">Available roles</p>
+            <ul className="mt-3 list-disc pl-5 text-sm text-slate-700">
+              <li>Accessibility review</li>
+              <li>Student research</li>
+              <li>Content edits</li>
+              <li>Community support</li>
+            </ul>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <p className="text-sm uppercase tracking-[0.15em] text-orange-500">Application</p>
+            <p className="mt-3 text-sm text-slate-700">Send your interest, skills, availability, and a brief background summary.</p>
+          </div>
         </div>
-        <div>
-          <label className="mb-2 block text-sm font-semibold text-slate-700">Title</label>
-          <input className="input" name="title" placeholder="Short summary" />
-        </div>
-        <div>
-          <label className="mb-2 block text-sm font-semibold text-slate-700">Message</label>
-          <textarea className="input" rows={5} name="message" placeholder="Tell us what is working, what is missing, or what needs fixing." />
-        </div>
-        <button className="btn-primary" type="submit">Submit feedback</button>
-      </form>
+      </div>
     </div>
   );
 }

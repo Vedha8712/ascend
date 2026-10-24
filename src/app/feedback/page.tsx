@@ -1,31 +1,30 @@
-const resources = [
-  { title: 'Active recall guides', category: 'Study methods', tags: ['memory', 'retention'] },
-  { title: 'Healthy timetable templates', category: 'Planning', tags: ['routine', 'wellbeing'] },
-  { title: 'Exam preparation checklist', category: 'Academic', tags: ['revision', 'confidence'] },
-  { title: 'Reflection prompts', category: 'Wellbeing', tags: ['journaling', 'self-check'] },
-];
-
-export default function ResourcesPage() {
+export default function FeedbackPage() {
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-2xl space-y-6">
       <div>
-        <p className="text-sm uppercase tracking-[0.2em] text-orange-500">Resources</p>
-        <h1 className="text-3xl font-black text-slate-900">Study resources and opportunities</h1>
+        <p className="text-sm uppercase tracking-[0.2em] text-orange-500">Feedback</p>
+        <h1 className="text-3xl font-black text-slate-900">Share ideas and report issues</h1>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        {resources.map((resource) => (
-          <div key={resource.title} className="card p-5">
-            <p className="text-sm uppercase tracking-[0.15em] text-orange-500">{resource.category}</p>
-            <h2 className="mt-2 text-xl font-bold text-slate-900">{resource.title}</h2>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {resource.tags.map((tag) => (
-                <span key={tag} className="badge">{tag}</span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+      <form className="card p-6 space-y-4">
+        <div>
+          <label className="mb-2 block text-sm font-semibold text-slate-700">Type</label>
+          <select className="input" name="type">
+            <option value="suggestion">Suggestion</option>
+            <option value="bug">Bug report</option>
+            <option value="feature">Feature request</option>
+          </select>
+        </div>
+        <div>
+          <label className="mb-2 block text-sm font-semibold text-slate-700">Title</label>
+          <input className="input" name="title" placeholder="Short summary" />
+        </div>
+        <div>
+          <label className="mb-2 block text-sm font-semibold text-slate-700">Message</label>
+          <textarea className="input" rows={5} name="message" placeholder="Tell us what is working, what is missing, or what needs fixing." />
+        </div>
+        <button className="btn-primary" type="submit">Submit feedback</button>
+      </form>
     </div>
   );
 }
