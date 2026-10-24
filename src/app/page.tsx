@@ -18,7 +18,7 @@ export default function HomePage() {
             </h1>
             <p className="mt-4 max-w-xl text-lg text-slate-600">
               Ascend gives students one calm system for tasks, study sessions, goals, academic planning,
-              habits, and personal growth — all centered around a motivational fox companion named Ember.
+              habits, and personal growth — all centered around a motivating fox companion named Ember.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link href="/register" className="btn-primary inline-block no-underline">Create account</Link>
